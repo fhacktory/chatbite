@@ -4,50 +4,42 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+
+ import React, { Component } from 'react';
+import { AppRegistry, Navigator, Text, View } from 'react-native';
+
+import DefaultScene from './components/DefaultScene';
+import CreateSession from './components/CreateSession';
+import InGamePredator from './components/InGamePredator';
+import InGamePrey from './components/InGamePrey';
+import JoinSession from './components/JoinSession';
 
 class chatbiteApp extends Component {
+
+  navigatorRenderScene(route, navigator) {
+    _navigator = navigator;
+    switch (route.id) {
+      case 'create':
+        return (<CreateSession navigator={navigator} title="create"/>);
+      case 'join':
+        return (<JoinSession navigator={navigator} title="join"/>);
+      case 'predator':
+        return (<InGamePredator navigator={navigator} title="predator" />);
+      case 'prey':
+        return (<InGamePrey navigator={navigator} title="prey" />);
+      default :
+        return (<DefaultScene navigator={navigator} title="default"/>);
+    }
+  }
+
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Navigator
+        initialRoute={{id: 'default'}}
+        renderScene={this.navigatorRenderScene}/>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('chatbiteApp', () => chatbiteApp);
