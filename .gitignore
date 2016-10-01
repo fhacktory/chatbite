@@ -1,6 +1,56 @@
 .DS_Store
+
+# Server
+#
 /chatbite-server/dist
 /chatbite-server/logs
 /chatbite-server/npm-debug.log
 /chatbite-server/node_modules
 /chatbite-server/.DS_Store
+
+
+
+# App
+#
+
+# OSX
+#
+chatbiteApp/.DS_Store
+
+# Xcode
+#
+chatbiteApp/build/
+chatbiteApp/*.pbxuser
+chatbiteApp/!default.pbxuser
+chatbiteApp/*.mode1v3
+chatbiteApp/!default.mode1v3
+chatbiteApp/*.mode2v3
+chatbiteApp/!default.mode2v3
+chatbiteApp/*.perspectivev3
+chatbiteApp/!default.perspectivev3
+chatbiteApp/xcuserdata
+chatbiteApp/*.xccheckout
+chatbiteApp/*.moved-aside
+chatbiteApp/DerivedData
+chatbiteApp/*.hmap
+chatbiteApp/*.ipa
+chatbiteApp/*.xcuserstate
+chatbiteApp/project.xcworkspace
+
+# Android/IJ
+#
+chatbiteApp/*.iml
+chatbiteApp/.idea
+chatbiteApp/.gradle
+chatbiteApp/local.properties
+
+# node.js
+#
+chatbiteApp/node_modules/
+chatbiteApp/npm-debug.log
+
+# BUCK
+chatbiteApp/buck-out/
+chatbiteApp/\.buckd/
+chatbiteApp/android/app/libs
+chatbiteApp/android/keystores/debug.keystore
