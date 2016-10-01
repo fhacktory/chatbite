@@ -66,6 +66,16 @@ et ça repart.
 
 
 
+# le Repo
+
+## folder `server` 
+Serveur en node.js
+
+Installer node 
+
+
+## folder `app`
+Application en react-native
 
 
 
