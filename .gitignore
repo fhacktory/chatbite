@@ -1,0 +1,6 @@
+.DS_Store
+/chatbite-server/dist
+/chatbite-server/logs
+/chatbite-server/npm-debug.log
+/chatbite-server/node_modules
+/chatbite-server/.DS_Store
