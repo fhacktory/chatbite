@@ -7,6 +7,10 @@
   },
   "dependencies": {
     "react": "15.3.2",
-    "react-native": "0.34.1"
+    "react-native": "0.34.1",
+    "react-native-push-notification": "^2.1.1"
+  },
+  "engines": {
+    "node": "6.6.0"
   }
 }

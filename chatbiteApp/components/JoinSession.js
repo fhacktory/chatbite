@@ -6,7 +6,7 @@ export default class JoinSession extends Component {
   render() {
     return (
       <View>
-          <Text>Joins une partie</Text>
+          <Text>Attend que la partie commence</Text>
       </View>
     )
   }

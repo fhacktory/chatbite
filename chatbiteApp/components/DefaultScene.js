@@ -22,7 +22,8 @@ onPressJoin(){
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-          username: this.state.text
+          username: this.state.text,
+          token: this.props.token
         })
     })
     .then((response) => response.json())
@@ -46,7 +47,8 @@ onPressCreate(){
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: this.state.text
+        username: this.state.text,
+        token: this.props.token
       })
       })
       .then((response) => response.json())
