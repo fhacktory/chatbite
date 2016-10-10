@@ -16,6 +16,8 @@ import JoinSession from './components/JoinSession';
 
 import PushNotification from 'react-native-push-notification';
 
+import dismissKeyboard from 'dismissKeyboard';
+
 
 class chatbiteApp extends Component {
 
@@ -113,10 +115,13 @@ deg2rad(deg) {
     _navigator = navigatores;
     switch (route.id) {
       case 'create':
+        dismissKeyboard();
         return (<CreateSession urlServer={this.state.urlServer} navigator={navigatores} title="create"/>);
       case 'join':
+        dismissKeyboard();
         return (<JoinSession  navigator={navigatores} title="join"/>);
       case 'predator':
+          dismissKeyboard();
             this.watchID = navigator.geolocation.watchPosition((position) => {
             var lastPosition = JSON.stringify(position);
             ToastAndroid.show('last '+lastPosition, ToastAndroid.LONG);
@@ -146,6 +151,7 @@ deg2rad(deg) {
 
         return (<InGamePredator indiceClose={this.state.iAmClose} urlServer={this.state.urlServer} username={this.state.name}  navigator={navigatores} title="predator" />);
       case 'prey':
+      dismissKeyboard();
               this.watchID = navigator.geolocation.watchPosition((position) => {
             var lastPosition = JSON.stringify(position);
             ToastAndroid.show('last '+lastPosition, ToastAndroid.LONG);
@@ -174,6 +180,7 @@ deg2rad(deg) {
           },{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
         return (<InGamePrey urlServer={this.state.urlServer} username={this.state.username} navigator={navigatores} title="prey" />);
       default :
+      dismissKeyboard();
         return (<DefaultScene token={this.state.token} urlServer={this.state.urlServer} updateName={this.updateName} navigator={navigatores} title="default"/>);
     }
   }
