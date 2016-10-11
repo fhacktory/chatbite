@@ -29,6 +29,7 @@ class chatbiteApp extends Component {
     this.navigatorRenderScene =this.navigatorRenderScene.bind(this);
     this.getDistanceFromLatLonInKm = this.getDistanceFromLatLonInKm.bind(this);
     this.deg2rad = this.deg2rad.bind(this);
+    this.startGpsLocalisation = this.startGpsLocalisation.bind(this);
   }
 
   updateName(name){
@@ -110,6 +111,39 @@ deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
+startGpsLocalisation(){
+  if(this.watchID){
+    return;
+  }
+           
+             this.watchID = navigator.geolocation.watchPosition((position) => {
+            var lastPosition = JSON.stringify(position);
+            ToastAndroid.show('last '+lastPosition, ToastAndroid.LONG);
+            this.setState({position:{lat : position.coords.latitude, lng: position.coords.longitude}});
+
+            if(this.state.preyPosition){
+              this.setState({iAmClose:this.getDistanceFromLatLonInKm(position.coords.latitude, position.coords.longitude, this.state.preyPosition.lat, this.state.preyPosition.lng)});
+            }
+
+            fetch(this.state.urlServer+'update/position/user', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username:this.state.name, gps:{lat : position.coords.latitude, lng: position.coords.longitude}})
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              console.log('responseJson', responseJson);
+              //this.props.navigator.push({id: 'create'})
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          },{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+}
+
   navigatorRenderScene(route, navigatores) {
     this._navigator = navigatores;
     _navigator = navigatores;
@@ -122,62 +156,13 @@ deg2rad(deg) {
         return (<JoinSession  navigator={navigatores} title="join"/>);
       case 'predator':
           dismissKeyboard();
-            this.watchID = navigator.geolocation.watchPosition((position) => {
-            var lastPosition = JSON.stringify(position);
-            ToastAndroid.show('last '+lastPosition, ToastAndroid.LONG);
-            this.setState({position:{lat : position.coords.latitude, lng: position.coords.longitude}});
-
-            if(this.state.preyPosition){
-              this.setState({iAmClose:this.getDistanceFromLatLonInKm(position.coords.latitude, position.coords.longitude, this.state.preyPosition.lat, this.state.preyPosition.lng)});
-            }
-
-            fetch(this.state.urlServer+'update/position/user', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({username:this.state.name, gps:{lat : position.coords.latitude, lng: position.coords.longitude}})
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              console.log('responseJson', responseJson);
-              //this.props.navigator.push({id: 'create'})
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-          },{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+          
+          this.startGpsLocalisation();
 
         return (<InGamePredator indiceClose={this.state.iAmClose} urlServer={this.state.urlServer} username={this.state.name}  navigator={navigatores} title="predator" />);
       case 'prey':
       dismissKeyboard();
-              this.watchID = navigator.geolocation.watchPosition((position) => {
-            var lastPosition = JSON.stringify(position);
-            ToastAndroid.show('last '+lastPosition, ToastAndroid.LONG);
-            this.setState({position:{lat : position.coords.latitude, lng: position.coords.longitude}});
-
-            if(this.state.preyPosition){
-              this.setState({iAmClose:this.getDistanceFromLatLonInKm(position.coords.latitude, position.coords.longitude, this.state.preyPosition.lat, this.state.preyPosition.lng)});
-            }
-
-            fetch(this.state.urlServer+'update/position/user', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({username:this.state.name, gps:{lat : position.coords.latitude, lng: position.coords.longitude}})
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              console.log('responseJson', responseJson);
-              //this.props.navigator.push({id: 'create'})
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-          },{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+          this.startGpsLocalisation();
         return (<InGamePrey urlServer={this.state.urlServer} username={this.state.username} navigator={navigatores} title="prey" />);
       default :
       dismissKeyboard();
